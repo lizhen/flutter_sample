@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function callFlutter() {
+            Toaster.postMessage('JS调用了Flutter');
+        }
+        function callJS(message) {
+            document.getElementById('p1').style.visibility = message;
+        }
+    </script>
+</head>
+<body>
+    <button onclick="callFlutter()">CallFutter</button>
+    <p id="p1" style="visibility:hidden;">
+        Flutter 调用了 JS.
+        Flutter 调用了 JS.
+        Flutter 调用了 JS.
+    </p>
+</body>
+</html>

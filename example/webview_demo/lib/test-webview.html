@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>webview</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- <script src="https://m.moschat.com/share/js/nativeSdk.9f34a938.js"></script> -->
+    <script>
+        // (function () {
+        if (navigator.userAgent.match(/(iPad|iPhone|iPod).*?YY/g)) {
+            if (
+                (window.opener == null && window.YYApiCore == null) ||
+                (window.opener != null && window.opener.YYApiCore == null) ||
+                (window.YYApiCore && window.YYApiCore.invokeClientMethod && window.YYApiCore.invokeClientMethod.toString()
+                    .length < 20)
+            ) {
+                var i = document.createElement("iframe");
+                i.style.display = "none";
+                i.src = "yyapi://load";
+                document.body.appendChild(i)
+            } else {
+                if (window.opener != null && window.YYApiCore == null && window.opener.YYApiCore != null) {
+                    window.YYApiCore = window.opener.YYApiCore
+                }
+            }
+        } else {
+            if (navigator.userAgent.indexOf("Android") != -1) {
+                YYApiCore = {
+                    __GLOBAL_FUNC_INDEX__: 0,
+                    invokeClientMethod: function (module, name, parameters, callback) {
+                        var r = false;
+                        try {
+                            var cbName = "";
+                            if (callback) {
+                                if (typeof callback == "function") {
+                                    cbName = YYApiCore.createGlobalFuncForCallback(callback)
+                                } else {
+                                    cbName = callback
+                                }
+                            }
+                            r = JSON.parse(window.AndroidJSInterfaceV2.invoke(module, name, JSON.stringify(parameters || {}),
+                                cbName))
+                        } catch (e) {
+                            if (console) {
+                                console.log(e)
+                            }
+                        }
+                        return r
+                    },
+                    createGlobalFuncForCallback: function (callback) {
+                        if (callback) {
+                            var name = "__GLOBAL_CALLBACK__" + (YYApiCore.__GLOBAL_FUNC_INDEX__++);
+                            window[name] = function () {
+                                var args = arguments;
+                                var func = (typeof callback == "function") ? callback : window[callback];
+                                setTimeout(function () {
+                                    func.apply(null, args)
+                                }, 0)
+                            };
+                            return name
+                        }
+                        return null
+                    },
+                    invokeWebMethod: function (callback, returnValue) {
+                        YYApiCore.invokeCallbackWithArgs(callback, [returnValue])
+                    },
+                    invokeCallbackWithArgs: function (callback, args) {
+                        if (callback) {
+                            var func = null;
+                            var tmp;
+                            if (typeof callback == "function") {
+                                func = callback
+                            } else {
+                                if ((tmp = window[callback]) && typeof tmp == "function") {
+                                    func = tmp
+                                }
+                            }
+                            if (func) {
+                                setTimeout(function () {
+                                    func.apply(null, args)
+                                }, 0)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function test() {
+            window.YYApiCore.invokeClientMethod("action", "nativeShare", {
+                shareuri: "https://m.moschat.com/invite/BvaQBS4",
+                sharedesc: "分享文案"
+            }, function (n) {
+                console.log("nativeShare", n);
+                console.log(JSON.stringify(n));
+            });
+        }
+
+        //})();
+    </script>
+</head>
+
+<body>
+<div class="splash-screen">
+    <div class="splash-loader"></div>
+    <button onclick="test()">测试</button>
+</div>
+</body>
+
+</html>
