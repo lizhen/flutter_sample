@@ -2,6 +2,15 @@
 
 flutter_sample有许多flutter相关功能demo的集合，他能够帮助您快速学习一些零碎的知识，本项目将会不定期更新。敬请期待...
 
+### 共同困惑
+
+我和大家一样，最开始接触到flutter的时候，发现有大量的官方Widget。但是真正要想实现自己的页面的时候，却发现自己不清楚到底该用哪个来实现。于是就跑去看官方的sample。
+当然，官方的sample跑起来是很好看的，但是一个小功能，动辄就有500行以上的代码，并且各种与该功能无关的信息都在一个文件中。让人看了确实很头痛。
+
+### 让代码讲故事
+
+所以我开始整理一些小的demo，专注于单一功能的实现，尽量让代码解释自己，我认为这是学习flutter最快的方式。 每个demo我尽量控制在100行代码以内，让代码讲一个短小但又精彩的故事。其中也有不少国外的哥们写的好的demo也被我收录进来了。
+
 ## 目前包含以下demo：
 
 ### 官方控件系列
@@ -87,8 +96,10 @@ Navigator.of(context).push(CustomeRouter(SecondPage()))
 - [nfc_demo]
 - [rxdart_demo]
 
-- []
+- [select_multiple_images_demo 选取多图]
 - []
 
 #### DEMO
 - [flutter_netease_music 仿网易音乐]
+- [twitter_like_demo 仿Twitter点赞效果]
+- [tantan_drag_demo 仿探探左右滑效果]
